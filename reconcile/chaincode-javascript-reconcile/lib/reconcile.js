@@ -169,6 +169,26 @@ class Reconcile extends Contract {
     //     return JSON.stringify(asset);
     // }
 
+    async DeleteAll(ctx){
+     
+        // range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
+        const iterator = await ctx.stub.getStateByRange('', '');
+        let result = await iterator.next();
+        while (!result.done) {
+            const strValue = Buffer.from(result.value.value.toString()).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            await ctx.stub.deleteState(record.Block_ID);
+            result = await iterator.next();
+        }
+        return 'All Rows Deleted';
+    }
+
     async CreateBlock(ctx, id,recon_id, quantity, sgx_list, primo_list) {
         const exists = await this.AssetExists(ctx, id);
         if (exists) {

@@ -570,6 +570,36 @@ app.post('/update_primo', function(request, response){
 	response.send("Primo Update Transaction complete")
 });
 
+app.get('/delete_all_primo',async(req,res)=>{
+	contract_primo.submitTransaction('DeleteAll').then(function(value){
+		console.log(value.toString())
+		res.send(value.toString())
+	}).catch((error) => {
+		console.error(error);
+		res.send(error)
+	  });
+})
+
+app.get('/delete_all_sgx',async(req,res)=>{
+	contract_sgx.submitTransaction('DeleteAll').then(function(value){
+		console.log(value.toString())
+		res.send(value.toString())
+	}).catch((error) => {
+		console.error(error);
+		res.send(error)
+	  });
+})
+
+app.get('/delete_all_reconcile_blocks',async(req,res)=>{
+	contract_reconcile.submitTransaction('DeleteAll').then(function(value){
+		console.log(value.toString())
+		res.send(value.toString())
+	}).catch((error) => {
+		console.error(error);
+		res.send(error)
+	  });
+})
+
 app.post('/delete_sgx',function(request,response){
 	console.log(request.body)
 	for(let i=0; i<request.body.length; i++){

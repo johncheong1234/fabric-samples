@@ -22,6 +22,26 @@ class Primo extends Contract {
         }
     }
 
+    async DeleteAll(ctx){
+     
+        // range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
+        const iterator = await ctx.stub.getStateByRange('', '');
+        let result = await iterator.next();
+        while (!result.done) {
+            const strValue = Buffer.from(result.value.value.toString()).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            await ctx.stub.deleteState(record.ID.toString());
+            result = await iterator.next();
+        }
+        return 'All Rows Deleted';
+    }
+
     // CreateAsset issues a new asset to the world state with given details.
     async CreateAsset(ctx, id, owner, quantity, execution_date, ISIN, rt, clino, settlement_price,status,block_id,request_ty,trade_id,trade_version_id, source_system_id,source_system,fii,book,counterparty,settlement_date,alpha_status,pricing_currency,principal,order_id,order_slang) {
         const exists = await this.AssetExists(ctx, id);
