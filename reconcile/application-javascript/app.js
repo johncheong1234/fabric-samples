@@ -626,6 +626,7 @@ app.post('/delete_primo',function(request,response){
 	response.send("Primo Delete Transaction complete")
 })
 
+//deprecated
 app.get('/reconcile',async(request,response)=>{
 	await contract_reconcile.submitTransaction("InitLedger").then(function(value){
 		response.send(value)
@@ -633,6 +634,7 @@ app.get('/reconcile',async(request,response)=>{
 	)
 })
 
+//deprecated
 app.get('/reconcile_2',async(request,response)=>{
 	await contract_reconcile.submitTransaction("reconcile_2").then(function(value){
 		response.send(value)
