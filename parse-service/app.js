@@ -405,7 +405,7 @@ app.get('/update_status_complex',(req,res)=>{
       }
     }
 
-    const failed_sgx_batch_chunks = chunkArrayInGroups(failed_sgx_batch,500)
+    const failed_sgx_batch_chunks = chunkArrayInGroups(failed_sgx_batch,4000)
 
     for (const chunk of failed_sgx_batch_chunks) {
       await uploadData("http://localhost:3000/update_sgx_status_array", chunk).then(function (response) {
@@ -437,7 +437,7 @@ app.get('/update_status_complex',(req,res)=>{
       }
     }
 
-    const failed_primo_batch_chunks = chunkArrayInGroups(failed_primo_batch,500)
+    const failed_primo_batch_chunks = chunkArrayInGroups(failed_primo_batch,4000)
 
     for (const chunk of failed_primo_batch_chunks) {
       await uploadData("http://localhost:3000/update_primo_status_array", chunk).then(function (response) {
@@ -469,7 +469,7 @@ app.get('/update_status_complex',(req,res)=>{
       }
     }
 
-    const success_sgx_batch_chunks = chunkArrayInGroups(success_sgx_batch,500)
+    const success_sgx_batch_chunks = chunkArrayInGroups(success_sgx_batch,4000)
 
     for (const chunk of success_sgx_batch_chunks) {
       await uploadData("http://localhost:3000/update_sgx_status_array", chunk).then(function (response) {
@@ -501,7 +501,7 @@ app.get('/update_status_complex',(req,res)=>{
       }
     }
 
-    const success_primo_batch_chunks = chunkArrayInGroups(success_primo_batch,500)
+    const success_primo_batch_chunks = chunkArrayInGroups(success_primo_batch,4000)
 
     for (const chunk of success_primo_batch_chunks) {
       await uploadData("http://localhost:3000/update_primo_status_array", chunk).then(function (response) {
@@ -611,7 +611,7 @@ app.get('/transform_reconcile', (req,res)=>{
 app.get('/update_block_id_complex',async(req,res)=>{
   await axios.get('http://localhost:3002/transform_reconcile').then(async(resp)=>{
 
-    const sgx_list_chunks = chunkArrayInGroups(resp.data['sgx_list'],500)
+    const sgx_list_chunks = chunkArrayInGroups(resp.data['sgx_list'],4000)
     for (const chunk of sgx_list_chunks) {
       await uploadData("http://localhost:3000/update_sgx_block_id_array", chunk).then(function (response) {
         console.log(response.data);
@@ -619,7 +619,7 @@ app.get('/update_block_id_complex',async(req,res)=>{
        })
     }
 
-    const primo_list_chunks = chunkArrayInGroups(resp.data['primo_list'],500)
+    const primo_list_chunks = chunkArrayInGroups(resp.data['primo_list'],4000)
     for (const chunk of primo_list_chunks) {
       await uploadData("http://localhost:3000/update_primo_block_id_array", chunk).then(function (response) {
         console.log(response.data);

@@ -91,7 +91,7 @@ def parse_primo_batch():
         
     to_return = json.dumps(array)
 
-    n=2000
+    n=4000
 
     output=[array[i:i + n] for i in range(0, len(array), n)]
         
